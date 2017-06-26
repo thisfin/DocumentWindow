@@ -13,9 +13,37 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     static let windowSize = NSMakeSize(800, 600)
     var window: NSWindow!
 
+    func applicationWillFinishLaunching(_ notification: Notification) {
+        _ = DocumentController.shared()
+    }
+
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        NSDocumentController.shared().defaultType = "swift"
-        NSDocumentController.shared().openDocument(self)
+//        SwiftDocument.init().makeWindowControllers()
+
+        let dc = NSDocumentController.shared()
+        dc.newDocument("aa")
+
+//        dc.openDocument(self)
+
+//        let panel = NSOpenPanel()
+//        panel.allowsMultipleSelection = false
+//        panel.canChooseFiles = true
+//        panel.canChooseDirectories = false
+//        panel.canCreateDirectories = false
+//        panel.allowedFileTypes = ["swift"]
+//        panel.message = "select .ttf file"
+//        dc.beginOpenPanel(panel, forTypes: ["swift"]) { (i) in
+//            if i == NSModalResponseOK, let url = panel.url {
+//                var a: Error?
+//                dc.openDocument(withContentsOf: url, display: true, completionHandler: { (document, b, a) in
+//                    print("\(a)")
+//                    print("\(String(describing: document))")
+//                })
+////                let a = try! dc.makeDocument(withContentsOf: url, ofType: "swift")
+////                print("\(a)")
+//            }
+//        }
+
 
 
 //        let dvc = NSDocumentController.shared()
