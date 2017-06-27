@@ -14,14 +14,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var window: NSWindow!
 
     func applicationWillFinishLaunching(_ notification: Notification) {
-        _ = DocumentController.shared()
+//        _ = NSDocumentController.shared()
     }
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+
 //        SwiftDocument.init().makeWindowControllers()
 
         let dc = NSDocumentController.shared()
-        dc.newDocument("aa")
+        dc.openDocument(self)
+//dc.newDocument(nil)
 
 //        dc.openDocument(self)
 

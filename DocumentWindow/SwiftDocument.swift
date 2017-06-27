@@ -17,19 +17,28 @@ class SwiftDocument: NSDocument {
         window.center()
         let windowController = NSWindowController(window: window)
         window.windowController = windowController
+        windowController.document = self
+
+//        let windowController = NSWindowController.init()
+//        windowController.contentViewController = ViewController()
+//        windowController.document = self
+
         self.addWindowController(windowController)
 //        window.makeKeyAndOrderFront(self)
-
-        self.close()
-        self.rele
     }
+
+//    override func printOperation(withSettings printSettings: [String : Any]) throws -> NSPrintOperation {
+//        let printOperation = NSPrintOperation(view: (self.windowControllers.last?.contentViewController?.view)!, printInfo: printInfo)
+//        return printOperation
+//    }
 
     override func data(ofType typeName: String) throws -> Data {
 
         print("data")
+        return  Data()
         // Insert code here to write your document to data of the specified type. If outError != nil, ensure that you create and set an appropriate error when returning nil.
         // You can also choose to override fileWrapperOfType:error:, writeToURL:ofType:error:, or writeToURL:ofType:forSaveOperation:originalContentsURL:error: instead.
-        throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
+//        throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
     }
 
     override func read(from data: Data, ofType typeName: String) throws {
@@ -38,5 +47,9 @@ class SwiftDocument: NSDocument {
         // You can also choose to override readFromFileWrapper:ofType:error: or readFromURL:ofType:error: instead.
         // If you override either of these, you should also override -isEntireFileLoaded to return false if the contents are lazily loaded.
 //        throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
+    }
+
+    override func printOperation(withSettings printSettings: [String : Any]) throws -> NSPrintOperation {
+        return try! super.printOperation(withSettings: printSettings)
     }
 }

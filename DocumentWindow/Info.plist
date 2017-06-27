@@ -11,12 +11,14 @@
 			<array>
 				<string>txt</string>
 			</array>
+			<key>CFBundleTypeName</key>
+			<string>DocumentType</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array/>
 			<key>NSDocumentClass</key>
-			<string>SwiftDocument</string>
+			<string>$(PRODUCT_MODULE_NAME).SwiftDocument</string>
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
