@@ -14,15 +14,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var window: NSWindow!
 
     func applicationWillFinishLaunching(_ notification: Notification) {
-//        _ = NSDocumentController.shared()
+//        NSDocumentController.shared()
     }
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
 
 //        SwiftDocument.init().makeWindowControllers()
 
-        let dc = NSDocumentController.shared()
-        dc.openDocument(self)
+//        let dc = NSDocumentController.shared()
+//        dc.openDocument(self)
+
 //dc.newDocument(nil)
 
 //        dc.openDocument(self)
@@ -81,6 +82,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 
 
-        
+        NSApplication.shared().menu = {
+            let menu = NSMenu()
+            menu.addItem({
+                let iconfontPreviewItem = NSMenuItem()
+                iconfontPreviewItem.submenu = {
+                    let submenu = NSMenu()
+                    submenu.addItem(NSMenuItem(title: "Open...", action: #selector(NSDocumentController.openDocument(_:)), keyEquivalent: "o"))
+                    submenu.addItem(NSMenuItem.separator())
+                    submenu.addItem(NSMenuItem(title: "About \(ProcessInfo.processInfo.processName)", action: #selector(NSApp.orderFrontStandardAboutPanel(_:)), keyEquivalent: ""))
+                    submenu.addItem(NSMenuItem(title: "Quit \(ProcessInfo.processInfo.processName)", action: #selector(NSApp.terminate(_:)), keyEquivalent: "q"))
+                    return submenu
+                }()
+                return iconfontPreviewItem
+                }())
+            return menu
+        }()
+
     }
 }

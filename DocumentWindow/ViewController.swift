@@ -20,4 +20,20 @@ class ViewController: NSViewController {
         view.layer?.backgroundColor = NSColor.white.cgColor
         view.frame = NSRect(origin: .zero, size: AppDelegate.windowSize)
     }
+
+    override func viewWillAppear() {
+        super.viewWillAppear()
+    }
+
+    override func viewDidAppear() {
+        super.viewDidAppear()
+    }
+
+    override func viewWillDisappear() {
+        super.viewWillDisappear()
+    }
+
+    override func viewDidDisappear() {
+        super.viewDidDisappear()
+    }
 }

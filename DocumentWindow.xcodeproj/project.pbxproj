@@ -61,10 +61,10 @@
 				664522131F01013A006D9B6D /* Info.plist */,
 				6645220A1F01013A006D9B6D /* AppDelegate.swift */,
 				66E9DE691F010AA300C547AC /* Application.swift */,
+				66A9A6A51F0169AF00A2F013 /* DocumentController.swift */,
+				66E9DE6C1F01130E00C547AC /* SwiftDocument.swift */,
 				6645220C1F01013A006D9B6D /* ViewController.swift */,
 				6645220E1F01013A006D9B6D /* Assets.xcassets */,
-				66E9DE6C1F01130E00C547AC /* SwiftDocument.swift */,
-				66A9A6A51F0169AF00A2F013 /* DocumentController.swift */,
 			);
 			path = DocumentWindow;
 			sourceTree = "<group>";
