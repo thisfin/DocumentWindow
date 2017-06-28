@@ -9,7 +9,7 @@
 import Cocoa
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
+class AppDelegate: NSObject {
     static let windowSize = NSMakeSize(800, 600)
     var window: NSWindow!
 
@@ -21,10 +21,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 //        NSLog("applicationShouldHandleReopen \(flag)")
 //        return false
 //    }
-
-    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
-        return true
-    }
 
     func applicationWillFinishLaunching(_ notification: Notification) {
         // NSDocumentController subclass init must at here
@@ -96,10 +92,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 iconfontPreviewItem.submenu = {
                     let submenu = NSMenu()
                     submenu.addItem(NSMenuItem(title: "Open...", action: #selector(NSDocumentController.openDocument(_:)), keyEquivalent: "o"))
-                    submenu.addItem(NSMenuItem(title: "Open...", action: #selector(AppDelegate.openDocument(_:)), keyEquivalent: "p"))
                     submenu.addItem(NSMenuItem(title: "New", action: #selector(NSDocumentController.newDocument(_:)), keyEquivalent: "n"))
                     submenu.addItem(NSMenuItem.separator())
                     submenu.addItem(NSMenuItem(title: "About \(ProcessInfo.processInfo.processName)", action: #selector(NSApp.orderFrontStandardAboutPanel(_:)), keyEquivalent: ""))
+                    submenu.addItem(NSMenuItem(title: "Close Window", action: #selector(NSWindow.performClose(_:)), keyEquivalent: "w"))
                     submenu.addItem(NSMenuItem(title: "Quit \(ProcessInfo.processInfo.processName)", action: #selector(NSApp.terminate(_:)), keyEquivalent: "q"))
                     return submenu
                 }()
@@ -110,6 +106,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.restoreFinish(_:)), name: .NSApplicationDidFinishRestoringWindows, object: nil)
 
+
+        NSDocumentController.shared().openDocument(self)
         NSLog("applicationDidFinishLaunching \(NSDocumentController.shared().documents.count)")
 
 //        if NSDocumentController.shared().documents.count == 0 {
@@ -123,5 +121,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func restoreFinish(_ notification: NSNotification) {
         NSLog("restoreFinish \(NSDocumentController.shared().documents.count)")
+    }
+
+
+}
+
+extension AppDelegate: NSApplicationDelegate {
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        NSDocumentController.shared().openDocument(self)
+        return false
     }
 }

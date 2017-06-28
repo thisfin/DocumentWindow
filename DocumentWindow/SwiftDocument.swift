@@ -22,6 +22,7 @@ class SwiftDocument: NSDocument {
         window.contentViewController = ViewController()
         window.title = "Document Window"
         window.center()
+        window.isRestorable = false
 
         let windowController = NSWindowController(window: window)
 //        window.windowController = windowController
@@ -57,8 +58,8 @@ class SwiftDocument: NSDocument {
         NSLog("data")
         return Data()
     }
-
-    override func read(from data: Data, ofType typeName: String) throws {
+    override func read(from url: URL, ofType typeName: String) throws {
+//    override func read(from data: Data, ofType typeName: String) throws {
         NSLog("read: \(data) \(typeName)")
     }
 }
