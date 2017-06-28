@@ -13,8 +13,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     static let windowSize = NSMakeSize(800, 600)
     var window: NSWindow!
 
+//    func applicationShouldOpenUntitledFile(_ sender: NSApplication) -> Bool {
+//        <#code#>
+//    }
+
+//    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+//        NSLog("applicationShouldHandleReopen \(flag)")
+//        return false
+//    }
+
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        return true
+    }
+
     func applicationWillFinishLaunching(_ notification: Notification) {
-//        NSDocumentController.shared()
+        // NSDocumentController subclass init must at here
+        DocumentController.shared()
     }
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
@@ -75,13 +89,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 
 
-
-
-
-
-
-
-
         NSApplication.shared().menu = {
             let menu = NSMenu()
             menu.addItem({
@@ -89,6 +96,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 iconfontPreviewItem.submenu = {
                     let submenu = NSMenu()
                     submenu.addItem(NSMenuItem(title: "Open...", action: #selector(NSDocumentController.openDocument(_:)), keyEquivalent: "o"))
+                    submenu.addItem(NSMenuItem(title: "Open...", action: #selector(AppDelegate.openDocument(_:)), keyEquivalent: "p"))
+                    submenu.addItem(NSMenuItem(title: "New", action: #selector(NSDocumentController.newDocument(_:)), keyEquivalent: "n"))
                     submenu.addItem(NSMenuItem.separator())
                     submenu.addItem(NSMenuItem(title: "About \(ProcessInfo.processInfo.processName)", action: #selector(NSApp.orderFrontStandardAboutPanel(_:)), keyEquivalent: ""))
                     submenu.addItem(NSMenuItem(title: "Quit \(ProcessInfo.processInfo.processName)", action: #selector(NSApp.terminate(_:)), keyEquivalent: "q"))
@@ -99,5 +108,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             return menu
         }()
 
+        NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.restoreFinish(_:)), name: .NSApplicationDidFinishRestoringWindows, object: nil)
+
+        NSLog("applicationDidFinishLaunching \(NSDocumentController.shared().documents.count)")
+
+//        if NSDocumentController.shared().documents.count == 0 {
+//            NSDocumentController.shared().openDocument(nil)
+//        }
+    }
+
+    func openDocument(_ sender: NSMenuItem) {
+        NSDocumentController.shared().openDocument(sender)
+    }
+
+    func restoreFinish(_ notification: NSNotification) {
+        NSLog("restoreFinish \(NSDocumentController.shared().documents.count)")
     }
 }

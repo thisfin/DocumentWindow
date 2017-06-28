@@ -9,7 +9,8 @@
 import AppKit
 
 class DocumentController: NSDocumentController {
-    override var defaultType: String? {
-        return "txt"
+    override static func restoreWindow(withIdentifier identifier: String, state: NSCoder, completionHandler: @escaping (NSWindow?, Error?) -> Swift.Void) {
+        NSLog("restoreWindow")
+        super.restoreWindow(withIdentifier: identifier, state: state, completionHandler: completionHandler)
     }
 }

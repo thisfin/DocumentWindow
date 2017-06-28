@@ -12,9 +12,9 @@ class SwiftDocument: NSDocument {
     var wc: NSWindowController?
 
 
-    override class func autosavesInPlace() -> Bool {
-        return false
-    }
+//    override class func autosavesInPlace() -> Bool {
+//        return false
+//    }
 
     override func makeWindowControllers() {
         let window = NSWindow(contentRect: .zero, styleMask: [.closable, .resizable, .miniaturizable, .titled], backing: .buffered, defer: false)
@@ -24,29 +24,33 @@ class SwiftDocument: NSDocument {
         window.center()
 
         let windowController = NSWindowController(window: window)
-        window.windowController = windowController
-        windowController.document = self
+//        window.windowController = windowController
+//        windowController.document = self
+
+//        self.setWindow(window)
 
 //        let windowController = NSWindowController.init()
 //        windowController.contentViewController = ViewController()
 //        windowController.document = self
-wc = windowController
+//wc = windowController
         addWindowController(windowController)
 //        window.makeKeyAndOrderFront(self)
-window.makeKeyAndOrderFront(self)
-        NSLog("makeWindowControllers")
+//window.makeKeyAndOrderFront(self)
+
+//        showWindows()
+        NSLog("makeWindowControllers \(windowControllers.count)")
 
 
 //        let windowController = NSWindowController()
 //        windowController.contentViewController = ViewController()
 //        self.addWindowController(windowController)
-
     }
 
 //    override func printOperation(withSettings printSettings: [String : Any]) throws -> NSPrintOperation {
 //        let printOperation = NSPrintOperation(view: (self.windowControllers.last?.contentViewController?.view)!, printInfo: printInfo)
 //        return printOperation
 //    }
+
 
     override func data(ofType typeName: String) throws -> Data {
         Swift.print("data")
@@ -55,7 +59,6 @@ window.makeKeyAndOrderFront(self)
     }
 
     override func read(from data: Data, ofType typeName: String) throws {
-        Swift.print("read")
-        NSLog("read")
+        NSLog("read: \(data) \(typeName)")
     }
 }
