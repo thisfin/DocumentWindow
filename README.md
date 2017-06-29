@@ -13,6 +13,7 @@ Document-Base Application
     - NSView
 - without xib storyboard
 - sandbox
+- custom menu
 - 支持打开文件方式
     - 菜单打开
     - finder 中右键打开

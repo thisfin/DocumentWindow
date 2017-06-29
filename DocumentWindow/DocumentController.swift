@@ -16,7 +16,7 @@ class DocumentController: NSDocumentController {
 
     // 定制打开菜单
     override func beginOpenPanel(_ openPanel: NSOpenPanel, forTypes inTypes: [String]?, completionHandler: @escaping (Int) -> Swift.Void) {
-        openPanel.message = "请选择 .ttf 文件"
+        openPanel.message = "please select .ttf/.txt file"
         super.beginOpenPanel(openPanel, forTypes: inTypes) { (type) in
             if type == NSModalResponseCancel {
                 NSApp.terminate(self)
