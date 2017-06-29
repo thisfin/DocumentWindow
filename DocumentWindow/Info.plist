@@ -12,15 +12,31 @@
 				<string>txt</string>
 			</array>
 			<key>CFBundleTypeName</key>
-			<string></string>
+			<string>txtName</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
-			<array/>
-			<key>LSTypeIsPackage</key>
-			<integer>0</integer>
+			<array>
+				<string>public.plain-text</string>
+			</array>
 			<key>NSDocumentClass</key>
-			<string>$(PRODUCT_MODULE_NAME).SwiftDocument</string>
+			<string>$(PRODUCT_MODULE_NAME).TXTDocument</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>ttf</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>ttfName</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.truetype-ttf-font</string>
+			</array>
+			<key>NSDocumentClass</key>
+			<string>$(PRODUCT_MODULE_NAME).TTFDocument</string>
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>

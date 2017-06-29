@@ -9,8 +9,10 @@
 import Cocoa
 
 class ViewController: NSViewController {
+    let textField = NSTextField()
+
     override func loadView() {
-        view = NSView()
+        view = DragView()
     }
 
     override func viewDidLoad() {
@@ -19,6 +21,12 @@ class ViewController: NSViewController {
         view.wantsLayer = true
         view.layer?.backgroundColor = NSColor.white.cgColor
         view.frame = NSRect(origin: .zero, size: AppDelegate.windowSize)
+
+        textField.frame = view.frame
+        textField.alignment = .center
+        textField.autoresizingMask = [.viewWidthSizable, .viewHeightSizable]
+        textField.isEditable = false
+        view.addSubview(textField)
     }
 
     override func viewWillAppear() {
@@ -35,5 +43,9 @@ class ViewController: NSViewController {
 
     override func viewDidDisappear() {
         super.viewDidDisappear()
+    }
+
+    func setContent(content: String) {
+        textField.stringValue = content
     }
 }

@@ -11,80 +11,20 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject {
     static let windowSize = NSMakeSize(800, 600)
-    var window: NSWindow!
+    var hasOpenFile = false
 
-//    func applicationShouldOpenUntitledFile(_ sender: NSApplication) -> Bool {
-//        <#code#>
-//    }
+    func restoreFinish(_ notification: NSNotification) {
+        NSLog("restoreFinish \(NSDocumentController.shared().documents.count)")
+    }
+}
 
-//    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
-//        NSLog("applicationShouldHandleReopen \(flag)")
-//        return false
-//    }
-
+extension AppDelegate: NSApplicationDelegate {
     func applicationWillFinishLaunching(_ notification: Notification) {
         // NSDocumentController subclass init must at here
         DocumentController.shared()
     }
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-
-//        SwiftDocument.init().makeWindowControllers()
-
-//        let dc = NSDocumentController.shared()
-//        dc.openDocument(self)
-
-//dc.newDocument(nil)
-
-//        dc.openDocument(self)
-
-//        let panel = NSOpenPanel()
-//        panel.allowsMultipleSelection = false
-//        panel.canChooseFiles = true
-//        panel.canChooseDirectories = false
-//        panel.canCreateDirectories = false
-//        panel.allowedFileTypes = ["swift"]
-//        panel.message = "select .ttf file"
-//        dc.beginOpenPanel(panel, forTypes: ["swift"]) { (i) in
-//            if i == NSModalResponseOK, let url = panel.url {
-//                var a: Error?
-//                dc.openDocument(withContentsOf: url, display: true, completionHandler: { (document, b, a) in
-//                    print("\(a)")
-//                    print("\(String(describing: document))")
-//                })
-////                let a = try! dc.makeDocument(withContentsOf: url, ofType: "swift")
-////                print("\(a)")
-//            }
-//        }
-
-
-
-//        let dvc = NSDocumentController.shared()
-//        let url = URL(fileURLWithPath: NSHomeDirectory() + "Desktop/hosts")
-//
-//
-////        _ = try! dvc.openUntitledDocumentAndDisplay(true)
-//        dvc.openDocument(withContentsOf: url, display: true) { (document, true, nil) in
-//            print("\(String(describing: document))")
-//        }
-//
-//        let panel = NSOpenPanel()
-//        panel.allowsMultipleSelection = false
-//        panel.canChooseFiles = true
-//        panel.canChooseDirectories = false
-//        panel.canCreateDirectories = false
-//        panel.allowedFileTypes = ["swift"]
-//        panel.message = "select .ttf file"
-//        dvc.beginOpenPanel(panel, forTypes: nil) { (i) in
-//            if i == NSOKButton {
-//
-//            }
-//        }
-
-
-
-
-
         NSApplication.shared().menu = {
             let menu = NSMenu()
             menu.addItem({
@@ -106,29 +46,23 @@ class AppDelegate: NSObject {
 
         NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.restoreFinish(_:)), name: .NSApplicationDidFinishRestoringWindows, object: nil)
 
-
-        NSDocumentController.shared().openDocument(self)
-        NSLog("applicationDidFinishLaunching \(NSDocumentController.shared().documents.count)")
-
-//        if NSDocumentController.shared().documents.count == 0 {
-//            NSDocumentController.shared().openDocument(nil)
-//        }
+        NSLog("applicationDidFinishLaunching \(NSDocumentController.shared().documents.count) \(hasOpenFile)")
+        if !hasOpenFile {
+            NSDocumentController.shared().openDocument(self)
+        }
     }
 
-    func openDocument(_ sender: NSMenuItem) {
-        NSDocumentController.shared().openDocument(sender)
-    }
-
-    func restoreFinish(_ notification: NSNotification) {
-        NSLog("restoreFinish \(NSDocumentController.shared().documents.count)")
-    }
-
-
-}
-
-extension AppDelegate: NSApplicationDelegate {
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         NSDocumentController.shared().openDocument(self)
         return false
+    }
+
+    // finder 中右键打开, 执行顺序在 applicationDidFinishLaunching 前, 通过一个标志位来做空页面的传递
+    func application(_ sender: NSApplication, openFile filename: String) -> Bool {
+        NSLog("application openFile")
+        hasOpenFile = true
+        NSDocumentController.shared().openDocument(withContentsOf: URL.init(fileURLWithPath: filename), display: true) { (document, b, nil) in
+        }
+        return true
     }
 }
